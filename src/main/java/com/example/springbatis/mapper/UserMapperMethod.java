@@ -33,10 +33,10 @@ public class UserMapperMethod {
 			{
 				INSERT_INTO("user");
 				
-				HashMap<String, ArrayList<String>> CnV = getCnV(user);
+				HashMap<String, ArrayList<String>> CnVMap = getCnV(user);
 				
 				String columns = ""; boolean cInit = false;
-				for(String c: CnV.get("columns")) {
+				for(String c: CnVMap.get("columns")) {
 					if(!cInit) {
 						columns += c;
 						cInit = true;
@@ -46,7 +46,7 @@ public class UserMapperMethod {
 				}
 				
 				String values = ""; boolean vInit = false;
-				for(String v: CnV.get("values")) {
+				for(String v: CnVMap.get("values")) {
 					if(!vInit) {
 						values += String.format("\'%s\'", v);
 						vInit = true;
@@ -65,16 +65,16 @@ public class UserMapperMethod {
 			{
 				UPDATE("user");
 				
-				HashMap<String, ArrayList<String>> CnV = getCnV(user);
+				HashMap<String, ArrayList<String>> CnVMap = getCnV(user);
 				
 				String setQuery = ""; boolean init = false;
-				for(int i = 0; i < CnV.get("columns").size(); i++) {
+				for(int i = 0; i < CnVMap.get("columns").size(); i++) {
 					if(!init) {
-						setQuery += String.format("%s = \'%s\'", CnV.get("columns").get(i), CnV.get("values").get(i));
+						setQuery += String.format("%s = \'%s\'", CnVMap.get("columns").get(i), CnVMap.get("values").get(i));
 						init = true;
 					}
 					else
-						setQuery += String.format(", %s = \'%s\'", CnV.get("columns").get(i), CnV.get("values").get(i));
+						setQuery += String.format(", %s = \'%s\'", CnVMap.get("columns").get(i), CnVMap.get("values").get(i));
 				}
 				
 				SET(setQuery);
@@ -95,21 +95,21 @@ public class UserMapperMethod {
 	// CnV = Columns and Values
 	private HashMap<String, ArrayList<String>> getCnV(User user) {
 		@SuppressWarnings("serial")
-		HashMap<String, ArrayList<String>> CnV = new HashMap<>() {{
+		HashMap<String, ArrayList<String>> CnVMap = new HashMap<>() {{
 			put("columns", new ArrayList<String>());
 			put("values", new ArrayList<String>());
 		}};
 		
 		if(user.getName() != null) {
-			CnV.get("columns").add("name");
-			CnV.get("values").add(user.getName());
+			CnVMap.get("columns").add("name");
+			CnVMap.get("values").add(user.getName());
 		}
 //		if(user.getNextAttr() != null) {
-//			CnV.get("columns").add("nextAttr");
-//			CnV.get("values").add(user.getNextAttr());
+//			CnVMap.get("columns").add("nextAttr");
+//			CnVMap.get("values").add(user.getNextAttr());
 //		}
 		
-		return CnV;
+		return CnVMap;
 	}
 	
 }
