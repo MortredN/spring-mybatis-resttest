@@ -26,4 +26,10 @@ public interface UserMapper {
 	@InsertProvider(type = UserMapperMethod.class, method = "createUser")
 	@Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
 	void createUser(User user);
+	
+	@UpdateProvider(type = UserMapperMethod.class, method = "updateUser")
+	void updateUser(int id, User user);
+	
+	@DeleteProvider(type = UserMapperMethod.class, method = "deleteUser")
+	void deleteUser(int id);
 }

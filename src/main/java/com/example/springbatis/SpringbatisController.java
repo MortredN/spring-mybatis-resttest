@@ -23,7 +23,7 @@ public class SpringbatisController {
 	public String getUsers() throws Exception {
 		String output = "";
 		for(User user: userMapper.getUsers()) {
-			output += user.toString() + " -- ";
+			output += user.toString() + "<br>";
 		}
 		return output;
 	}
@@ -38,6 +38,20 @@ public class SpringbatisController {
 	@ResponseBody
 	public String createUser(@RequestBody User user) {
 		userMapper.createUser(user);
-		return "Successfully added User: " + user.getId();
+		return "Successfully added User: " + user.toString();
+	}
+	
+	@RequestMapping(value = "/users/{id}", method = RequestMethod.PUT, headers = { "content-type=application/json" }, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public String updateUser(@PathVariable int id, @RequestBody User user) {
+		userMapper.updateUser(id, user);
+		return "Successfully updated User ID no." + id;
+	}
+	
+	@RequestMapping(value = "/users/{id}", method = RequestMethod.DELETE)
+	@ResponseBody
+	public String deleteUser(@PathVariable int id) {
+		userMapper.deleteUser(id);
+		return "Successfully deleted User ID no." + id;
 	}
 }
